@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- PI 指令 引入CSS -->
+<?xml-stylesheet type="text/css" href="NewFile.css" ?>
+<!-- 引入约束文件 -->
+<!-- <!DOCTYPE persion SYSTEM "NewFile.dtd"> -->
+<!-- 内部约束 -->
+<!DOCTYPE persion [
+    <!ELEMENT person (name,age,sex,school,birthday)>
+    <!ELEMENT name (#PCDATA)>
+    <!ATTLIST name
+        ID3 ID #REQUIRED
+    >
+    <!ELEMENT age (#PCDATA)>
+    <!ATTLIST age
+        ID2 (AA|BB|CC) #REQUIRED
+    >
+    <!ELEMENT sex EMPTY>
+    <!ATTLIST sex
+        ID4 CDATA #FIXED "ABC"
+    >
+    <!ELEMENT school ANY>
+    <!ATTLIST school
+        ID4 CDATA "WWW"
+    >
+    <!ELEMENT birthday (#PCDATA)>
+    <!ATTLIST birthday
+        ID1 CDATA #REQUIRED
+    >
+    <!ENTITY TEST "HHHHHHHHHHHHHHHHHH">
+]>
+<person>
+    <name ID3="abc">&TEST;</name>
+    <age ID2="AA">20</age>
+    <sex ID4="ABC"></sex>
+    <school>test school</school>
+    <birthday ID1="AAAS">1999</birthday>
+</person>
