@@ -18,7 +18,7 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 
-public class Jaxp {
+public class Jaxp_dom {
     private static final String FILE_PATH = "/Users/yuhaisheng/Documents/sts-bundle/githubRepository/javaCustomUtils/src/main/java/org/custom/xml/person.xml";
 
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException, TransformerException {

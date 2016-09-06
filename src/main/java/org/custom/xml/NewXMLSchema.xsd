@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema
+    xmlns="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://www.custom.org/xxx"
+    elementFormDefault="qualified">
+    <element name="person">
+        <complexType>
+            <sequence>
+                <element name="name" type="string" maxOccurs="unbounded"></element>
+                <element name="age" type="int"></element>
+            </sequence>
+            <attribute name="id1" type="int" use="required"></attribute>
+        </complexType>
+    </element>
+</schema>
