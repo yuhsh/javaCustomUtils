@@ -10,6 +10,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FileUtil {
     private static final String FOLDER_SEPARATOR = "/";
@@ -199,5 +201,31 @@ public class FileUtil {
         }
         streamOut.close();
         inputStream.close();
+    }
+    
+    /**
+     * 读取指定路径下的所有文件
+     * @param filepath
+     * @return
+     */
+    public static Map<String, String> readfile(String filepath) {
+        // key是文件名，value是路径／文件名
+        Map<String, String> fileMap = new HashMap<String, String>();
+        File file = new File(filepath);
+        if (!file.isDirectory()) {
+            fileMap.put(file.getName(), file.getPath());
+        } else if (file.isDirectory()) {
+            String[] filelist = file.list();
+            for (int i = 0; i < filelist.length; i++) {
+                File readfile = new File(filepath + "\\" + filelist[i]);
+                if (!readfile.isDirectory()) {
+                    fileMap.put(readfile.getName(), readfile.getPath());
+                } else {
+                    readfile(filepath + "\\" + filelist[i]);
+                }
+            }
+        }
+        
+        return fileMap;
     }
 }
