@@ -6,6 +6,8 @@ package org.custom.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Random;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,6 +30,29 @@ public class StringUtils {
             "Ｍ", "Ｎ", "Ｏ", "Ｐ", "Ｑ", "Ｒ", "Ｓ", "Ｔ", "Ｕ", "Ｖ", "Ｗ", "Ｘ",
             "Ｙ", "Ｚ", "－", "＿", "＝", "＋", "＼", "｜", "【", "】", "；", "：",
             "'", "\"", "，", "〈", "。", "〉", "／", "？" };
+    /** 随机字符串取值范围 */
+    public static final char[] RANDOM_STRING_RANGE_VALUE = {
+      'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+      'j', 'k', 'i', 'm', 'n', 'o', 'p', 'q', 'r',
+      's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+      'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
+      'J', 'K', 'I', 'M', 'N', 'O', 'P', 'Q', 'R',
+      'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+      '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+
+    /** 表示月份 */
+    public static String[] MONTH_ENGLIST_NAME = {
+      "JAN", "FEB", "MAR", "APR",
+      "MAY", "JUN", "JUL", "AUG",
+      "SEP", "OCT", "NOV", "DEC"};
+
+    /**
+     * 获得一个UUID字符串
+     * @return
+     */
+    public static String uuid() {
+        return UUID.randomUUID().toString().replace("-", "").toUpperCase();
+    }
     
     /**
      * NULL转换成空字符串
@@ -253,5 +278,103 @@ public class StringUtils {
         for (int i = 0; i < bytes.length(); i += 2)
             baos.write((hexString.indexOf(bytes.charAt(i)) << 4 | hexString.indexOf(bytes.charAt(i + 1))));
         return new String(baos.toByteArray());
+    }
+    
+    /**
+     * 文字列左补位
+     * @param value 编辑对象文字列
+     * @param length 编辑结果长度
+     * @param ch 补位文字
+     * @return 处理结果文字类
+     */
+    public static String lpad(String value, int length, char ch) {
+
+        String string = nullToEmpty(value);
+        StringBuilder sb = new StringBuilder(string);
+        for (int i = 0; i < length - string.length(); i++) {
+            sb.insert(0, ch);
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 文字列右补位
+     * @param value 编辑对象文字列
+     * @param length 编辑结果长度
+     * @param ch 补位文字
+     * @return 处理结果文字类
+     */
+    public static String rpad(String value, int length, char ch) {
+
+        String string = nullToEmpty(value);
+        StringBuilder sb = new StringBuilder(string);
+        for (int i = 0; i < length - string.length(); i++) {
+            sb.append(ch);
+        }
+        return sb.toString();
+    }
+    
+    /**
+     * 英文大文字变换
+     *
+     * @param str
+     *            输入文字列
+     * @return 转换后文字列
+     */
+    public static String upperCase(String str) {
+      if (str == null) {
+        return null;
+      }
+      return str.toUpperCase();
+    }
+
+    /**
+     * 英文小文字变换
+     *
+     * @param str
+     *            输入文字列
+     * @return 转换后文字列
+     */
+    public static String lowerCase(String str) {
+      if (str == null) {
+        return null;
+      }
+      return str.toLowerCase();
+    }
+    
+    /**
+     * 产生随机符串
+     * @param len 随机数长度指定
+     * @return 指定长度的随机字符串
+     */
+    public static String genRandomStr(int len) {
+      int maxNum = 62;
+      int index;
+      int count = 0;
+
+      StringBuilder sb = new StringBuilder();
+      Random rd = new Random();
+      while(count < len) {
+        index = Math.abs(rd.nextInt(maxNum));
+        if (index >= 0 && index < RANDOM_STRING_RANGE_VALUE.length) {
+          sb.append(RANDOM_STRING_RANGE_VALUE[index]);
+          count++;
+        }
+      }
+      return sb.toString();
+    }
+    
+    /**
+     * 产生随机符串
+     * @param len 随机数长度指定
+     * @return 指定长度的随机字符串
+     */
+    public static String genRandomVerication(int len) {
+        StringBuilder sb = new StringBuilder();
+        Random rd = new Random();
+        for (int i = 0; i < len; i++) {
+            sb.append(String.valueOf((char) (rd.nextInt(10) + 48)));
+        }
+        return sb.toString();
     }
 }

@@ -3,10 +3,12 @@
  */
 package org.custom.utils;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -227,5 +229,37 @@ public class FileUtil {
         }
         
         return fileMap;
+    }
+    
+    /**
+     * 统计指定字符串在指定文件中出现的次数
+     * @return
+     * @throws IOException
+     */
+    public static int countSearchString(String fileName, String target) throws IOException {
+        FileReader fileReader = new FileReader(fileName);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        StringBuilder sb = new StringBuilder();
+        while(true) {
+            String line = bufferedReader.readLine();
+            if (line == null) {
+               break;
+            }
+            sb.append(line);
+        }
+        String result = sb.toString();
+        int count = 0;
+        int index = 0;
+        while(true) {
+            index = result.indexOf(target, index + 1);
+            if (index > 0) {
+                count ++;
+            } else {
+                break;
+            }
+        }
+        bufferedReader.close();
+        fileReader.close();
+        return count;
     }
 }

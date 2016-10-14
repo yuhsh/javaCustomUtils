@@ -11,6 +11,7 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.custom.constant.UtilConstants;
 
@@ -31,6 +32,12 @@ public class DateUtils {
     /** 时间算出分母 */
     private static final BigDecimal TIMS_DENOMINATOR = MILLS.multiply(SECONDS).multiply(MINUTES).multiply(HOURS);
 
+    /** 一天的秒数 */
+    public static final int SECONDS_IN_DAY = 60 * 60 * 24;
+    
+    /** 一天的毫秒数 */
+    public static final long MILLIS_IN_DAY = 1000L * SECONDS_IN_DAY;
+    
     /**
      * 系统时间取得
      * @return 当前的系统时间
@@ -210,5 +217,27 @@ public class DateUtils {
         calendar.add(Calendar.DAY_OF_MONTH, _step);
 
         return format(calendar.getTime(), _format);
+    }
+    
+    /**
+     * 判断给定参数是否为一天
+     * @param ms1 比较元
+     * @param ms2 比较先
+     * @return
+     */
+    public static boolean isSameDayOfMillis(final long ms1, final long ms2) {
+        final long interval = ms1 - ms2;
+        return interval < MILLIS_IN_DAY
+                && interval > -1L * MILLIS_IN_DAY
+                && toDay(ms1) == toDay(ms2);
+    }
+  
+    /**
+     * 给定毫秒数等到天数
+     * @param millis 给定毫秒数
+     * @return
+     */
+    private static long toDay(long millis) {
+        return (millis + TimeZone.getDefault().getOffset(millis)) / MILLIS_IN_DAY;
     }
 }
